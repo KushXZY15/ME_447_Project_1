@@ -55,46 +55,56 @@ def fitness_calc(pop_set,val):
 def create_pop(pop_size,items_quant,item_prob):
     # Create Chromosomes of 0s and 1s to Select Items for initial Population
     pop_set = np.zeros((pop_size,items_quant),dtype=int)
+    # makes a matrix that has number of columns = size of population and the number of rows = quantity of items
     for population in range(pop_size):
+        # for each column/individual in pop_set
         for chromosome in range(items_quant):
+            # for each "item slot", item/no item assigned in each index with a 0 or 1 with a specified probability
             pop_set[population,chromosome] = rand.choices([0,1],weights=[1-item_prob,item_prob],k=1)[0]
-
+            # what is the [0] for?
     return(pop_set)
     # Create Chromosomes
 
 ### Calculate the Fitness of Generated Population
 
 def fitness_calc(pop_set,val,cap,weight):
-    # Multiply Populations with Item Values to Get Fitness
+    # Multiply row by column Populations with Item Values to Get Fitness
     fitness = pop_set @ val
-    # Check for Overweight Populations and Give Fitness 0
+    # ! val is row vector with each item's value, dimensions of matrices are not correct for multiplication
     actual_weight = pop_set @ weight
+    # ! what is shape of actual_weight? looks like returns scalar
+
 
     for population in range(len(pop_set[:,0])):
+        # searches through actual_weight for overweight individuals
         if actual_weight[population] > cap:
+            # Check for overweight individuals and assign fitness = 0 if overweight
             fitness[population] = 0
+            # ! is fitness indexable?
 
     return(fitness)
 
 def mating(pop_set,fitness,mates_quant):
     mate_order = np.argsort(fitness)[::-1]
-    parents = pop_set[mate_order]
-    parents = parents[:mates_quant, :]
-    parents_fitness = fitness[mate_order][:mates_quant]
+
+    # ! supposed to give column indexes of pop_set sorted in order of descending fitness. syntax of [::-1]?
+    parents = pop_set[mate_order]   #creates fitness-ordered array of parents
+    parents = parents[:mates_quant, :]  #chooses number of parents to mate
+    parents_fitness = fitness[mate_order][:mates_quant] #grabs fitness of parents in order of decreasing fitness up to the number of parents ???
 
     return(parents,parents_fitness)
 
 def crossover(parents,offspring_quant,items_quant,val,cap,weight):
-    offsprings = np.zeros((offspring_quant,items_quant),dtype=int)
-    crossing_point = np.random.random_integers(0,len(parents[0,:]))
+    offsprings = np.zeros((offspring_quant,items_quant),dtype=int)  #creates empty matrix with offspring amount number of columns and item quant rows
+    crossing_point = np.random.random_integers(0,len(parents[0,:])) #generates random index of crossover between 0 and the number of items/rows in parents
 
-    for offspring in range(offspring_quant):
+    for offspring in range(offspring_quant):    #creates offspring up to the specified amount
 
-        p1_idx = offspring%offspring_quant
-        p2_idx = (offspring+1)%offspring_quant
+        p1_idx = offspring%offspring_quant  #creates indice for current offspring column (filled with items_quant rows)
+        p2_idx = (offspring+1)%offspring_quant  #same as before but shifted right one, restarts at 0 when p1=last
 
-        offsprings[offspring, :crossing_point] = parents[p1_idx, :crossing_point]
-        offsprings[offspring, crossing_point:] = parents[p2_idx, crossing_point:]
+        offsprings[offspring, :crossing_point] = parents[p1_idx, :crossing_point]   #populates offsprings array
+        offsprings[offspring, crossing_point:] = parents[p2_idx, crossing_point:]   # ! always overwrites cross point with parent 2's crossing_point value
 
         offspring_fitness = fitness_calc(offsprings,val,cap,weight)
 
@@ -102,9 +112,13 @@ def crossover(parents,offspring_quant,items_quant,val,cap,weight):
 
 def mutation(offsprings,prob_mutation,val,cap,weight):
     for offspring in range(len(offsprings[:,0])):
+        # for individual offspring:
         mutated_offsprings = offsprings
+        # fill mutated matrix with the same items as the offspring
         mutations = np.random.uniform(0.0,1.0, (len(offsprings[offspring,:]),1))
+        # draws sample from uniform dist from [0, 1), creates column vector the size of offspring number of items
         for chromosome in range(len(offsprings[offspring,:])):
+
             if mutations[chromosome] <= prob_mutation:
                 if chromosome == 0:
                     mutated_offsprings[offspring,chromosome] = 1
