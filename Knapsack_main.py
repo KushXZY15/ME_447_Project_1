@@ -19,6 +19,7 @@ cap_B,items_quant_B,val_B,weight_B = open_knapsack(knapsack_B)
 
 # Create Array to Hold Index Values
 items_A = np.arange(0,items_quant_A)
+#np.arange: returns evenly spaced values with a given interval ex: arange(0, number_of_items, step)
 items_B = np.arange(0,items_quant_A)
 
 # Constants for GA

@@ -86,7 +86,7 @@ def fitness_calc(pop_set,val,cap,weight):
 
 def mating(pop_set,fitness,mates_quant):
     mate_order = np.argsort(fitness)[::-1]
-
+    
     # ! supposed to give column indexes of pop_set sorted in order of descending fitness. syntax of [::-1]?
     parents = pop_set[mate_order]   #creates fitness-ordered array of parents
     parents = parents[:mates_quant, :]  #chooses number of parents to mate
