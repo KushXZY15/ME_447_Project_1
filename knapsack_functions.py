@@ -139,23 +139,19 @@ def mutation(offsprings, prob_mutation, val, cap, weight):
         # draws sample from uniform dist from [0, 1), creates column vector the size of number of items
         for chromosome in range(len(offsprings[offspring, :])):
             # indexing each column/item/chromosome in offspring
-            # !!! chromosome is just an index value and not the value of offspring[chromosome]
             if mutations[chromosome] <= prob_mutation:
                 # check if mutated value in mutation chromosome is <= probability of mutation
                 # if true, mutate as such:
-                if chromosome == 0:
-                    # !!! I think you mean offspring[chromosome] == 0, i.e. is empty
-                    # otherwise means: for the first column/chromosome
+                if offsprings[offspring, chromosome] == 0:
+                    # if offspring[chromosome] == 0, i.e. is empty
                     mutated_offsprings[offspring, chromosome] = 1
-                    # set the value of mutated_offspring[@ current loop row, column index of offspring] = 1
-                    # !!! or i.e. gives the mutated offspring an item
+                    # gives the mutated offspring an item
                 else:
                     mutated_offsprings[offspring, chromosome] = 0
-                    # !!! if there is an item, take away an item
-                    # otherwise just gets rid of all items except the first one
+                    # if there is an item, take away an item
 
     mutated_offspring_fitness = fitness_calc(offsprings, val, cap, weight)
-    # !!! sets the fitness value of mutated offspring = the fitness of the given offspring pop
+    # sets the fitness value of mutated offspring = the fitness of the given offspring pop
 
     return mutated_offsprings, mutated_offspring_fitness
 
