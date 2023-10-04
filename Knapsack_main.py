@@ -23,14 +23,14 @@ items_A = np.arange(0,items_quant_A)
 items_B = np.arange(0,items_quant_A)
 
 # Constants for GA
-pop_size_A = 100
-pop_size_B = 100
+pop_size_A = 50
+pop_size_B = 50
 
-item_prob_A = 0.01
-item_prob_B = 0.2
+item_prob_A = 0.10
+item_prob_B = 0.10
 
-mates_quant_A = 50
-mates_quant_B = 10
+mates_quant_A = 25
+mates_quant_B = 25
 
 offspring_quant_A = mates_quant_A - 1
 offspring_quant_B = mates_quant_B - 1
@@ -38,15 +38,16 @@ offspring_quant_B = mates_quant_B - 1
 crossing_point_A = int(items_quant_A/2)
 crossing_point_B = int(items_quant_B/2)
 
-num_generations_A = 1000
+num_generations_A = 500
+num_generations_B = 500
 
-prob_mutation_A = 0.15
+prob_mutation_A = 0.05
+prob_mutation_B = 0.05
 
 # Execute GA Algo
-#pop_set_A = create_pop(pop_size_A,items_quant_A,item_prob_A)
-#pop_set_B = create_pop(pop_size_B,items_quant_B,item_prob_B)
+#pop_set_A = create_pop(pop_size_A,items_quant_A,item_p0b_B)
 
-#fitness_A = fitness_calc(pop_set_A,val_A,cap_A,weight_B)
+#fitness_A = fitness_calc(pop_set_A,val_A,cap_A,weight_B)0
 #fitness_B = fitness_calc(pop_set_B,val_B,cap_A,weight_B)
 
 #parents_A, parents_fitness_A = mating(pop_set_A,fitness_A,mates_quant_A)
@@ -63,4 +64,5 @@ prob_mutation_A = 0.15
 #print(np.sum(fitness_A))
 #print(np.sum(fitness_B))
 
-pop_set_A,pop_fitness_A,best_solution_A,best_fitness_A,best_fitnesses_A = knapsack_GA(pop_size_A,cap_A,weight_A,val_A,items_quant_A,item_prob_A,mates_quant_A,num_generations_A,offspring_quant_A,prob_mutation_A)
+#pop_set_A,pop_fitness_A,best_solution_A,best_fitness_A,best_fitnesses_A = knapsack_GA(pop_size_A,cap_A,weight_A,val_A,items_quant_A,item_prob_A,mates_quant_A,num_generations_A,offspring_quant_A,prob_mutation_A)
+pop_set_B,pop_fitness_B,best_solution_B,best_fitness_B,best_fitnesses_B = knapsack_GA(pop_size_B,cap_B,weight_B,val_B,items_quant_B,item_prob_B,mates_quant_B,num_generations_B,offspring_quant_B,prob_mutation_B)

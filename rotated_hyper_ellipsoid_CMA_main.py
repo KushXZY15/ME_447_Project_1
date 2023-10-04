@@ -82,50 +82,22 @@ def plot_cov_ellipse(pos, cov, volume=.99, ax=None, fc='lightblue', ec='darkblue
     ellip = Ellipse(xy=pos, width=width, height=height, angle=theta, **kwrg)
     ax.add_artist(ellip)
 
-# !!! These define the rastrigin problems. Also function as the fitness functions. All code below here is fulled in some manner from the provided notebook but with modified variables as needed.
+def _rotated_hyper_ellipsoid_impl(x1,x2,shift_x1,shift_x2):
+    return ((np.sqrt(3)/2*(x1 - shift_x1) + 1/2*(x2 - shift_x2))**2 + 5*(np.sqrt(3)/2*(x2 - shift_x2) + 1/2*(x1 - shift_x1))**2)
 
-def _shifted_rastrigin_impl_2(x,y,shift_x, shift_y):
-    return (2 * 10.0 + ((x-shift_x)**2 + (y-shift_y)**2) - 10.0 * np.cos(2.0 * np.pi * (x-shift_x)) - 10.0 * np.cos(2.0 * np.pi * (y-shift_y)))
+rotated_hyper_ellipsoid = partial(_rotated_hyper_ellipsoid_impl,shift_x1=2.0,shift_x2=2.0)
 
-def _shifted_rastrigin_impl_5(x1,x2,x3,x4,x5,shift_x1,shift_x2,shift_x3,shift_x4,shift_x5):
-    return (5 * 10.0 + ((x1-shift_x1)**2 + (x2-shift_x2)**2 + (x3-shift_x3)**2 + (x4-shift_x4)**2 + (x5-shift_x5)**2) 
-    - 10.0 * (np.cos(2.0 * np.pi * (x1-shift_x1)) + np.cos(2.0 * np.pi * (x2-shift_x2)) + np.cos(2.0 * np.pi * (x3-shift_x3)) + np.cos(2.0 * np.pi * (x4-shift_x4)) + np.cos(2.0 * np.pi * (x5-shift_x5))))
-
-shifted_rastrigin_2 = partial(_shifted_rastrigin_impl_2,shift_x=2.0,shift_y=2.0)
-shifted_rastrigin_5 = partial(_shifted_rastrigin_impl_5,shift_x1=2.0,shift_x2=2.0,shift_x3=2.0,shift_x4=2.0,shift_x5=2.0)
-
-current_problem = shifted_rastrigin_2
+current_problem = rotated_hyper_ellipsoid
 
 #plot_problem_3d(current_problem, ((-20,-20), (20,20)))
 
 initial_centroid = np.random.randn(2,)
-cma_es = CMAES(initial_centroid,2,20,50)
+cma_es = CMAES(initial_centroid,1,10,20)
 
-solution_2, fitness_history_2 = cma_es.run(current_problem)
-
-current_problem = shifted_rastrigin_5
-
-initial_centroid = np.random.randn(5,)
-cma_es = CMAES(initial_centroid,5,20,100)
-
-solution_5, fitness_history_5 = cma_es.run(current_problem)
-
+solution, fitness_history = cma_es.run(current_problem)
 
 plt.figure(figsize=(12, 12))
-plt.plot(fitness_history_2, '-o', lw=3, ms=20)
+plt.plot(fitness_history, '-o', lw=3, ms=20)
 plt.xlabel("Generation")
 plt.ylabel("Best Fitness")
 plt.show()
-
-plt.figure(figsize=(12, 12))
-plt.plot(fitness_history_5, '-o', lw=3, ms=20)
-plt.xlabel("Generation")
-plt.ylabel("Best Fitness")
-plt.show()
-
-'''
-initial_centroid = np.random.randn(5, )
-cma_es = CMAES(initial_centroid, 5, 30, 100)
-
-cma_es.run(current_problem)
-'''

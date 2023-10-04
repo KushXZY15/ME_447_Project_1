@@ -13,47 +13,6 @@ def open_knapsack(knapsack):
 
     return (capacity, quantity, values, weights)
 
-
-'''
-# OLD to Create Initial Population
-def create_pop(pop,cap,items,quant,weight):
-    pop_set = np.zeros((pop,quant),dtype=float)
-
-    # Create Chromosomes
-    for population in range(pop):
-        pop_set[population,:] = rand.sample(items.tolist(),len(items))
-        actual_weight = 0
-        for chromosome in pop_set[population,:]:
-            actual_weight += weight[int(chromosome)]
-        
-        # Remove Excess Chromosomes to Meet Capacity
-        excess = 0
-        while actual_weight > cap:
-            excess -= 1
-            pop_set[population,excess] = np.nan
-            actual_weight = 0
-            for chromosome in pop_set[population,:excess]:
-                actual_weight += weight[int(chromosome)]
-
-    return(pop_set)
-
-# OLD Function to Calculate Fitness Value of Population Based on Value of Chromosomes
-def fitness_calc(pop_set,val):
-    fitness = np.zeros(len(pop_set[:,0]))
-
-    # Add Value of Current Chromosome Until NaN is Found
-    for population in range(len(fitness)):
-        for chromosome in pop_set[population,:]:
-            if np.isnan(chromosome) == False:
-                fitness[population] += val[int(chromosome)]
-            else:                
-                break
-
-    return(fitness)    
-
-'''
-
-
 # Create Initial Knapsack Population
 
 def create_pop(pop_size, items_quant, item_prob):
@@ -91,6 +50,23 @@ def fitness_calc(pop_set, val, cap, weight):
 
     return fitness
 
+### !!! Added function to perform fitness calculation only for CMA. Since it operates 1 population at a time got rid of population based for loop. 
+### !!! Left in matrix multiplications to avoid breaking something. Can try changing later if desired.
+
+def fitness_calc_cma(pop_set, val, cap, weight):
+    # Matrix multiply population (pop_size x items_quant) with item values (items_quant x 1 column vector)
+    fitness = pop_set @ val
+    # val is value per filled item index/pop_set column
+    # returns a column vector with pop_size # of rows filled with the value that each individual/row of pop_set caries
+    actual_weight = pop_set @ weight
+    # same process but returns weight each individual is carrying
+
+    if actual_weight > cap:
+        # scans actual_weight vector [with population/individual index] for overweight individuals
+        # If the total weight of an individual is greater than capacity, assign fitness[individual idx] = 0
+        fitness = 0
+
+    return fitness
 
 def mating(pop_set, fitness, mates_quant):
     mate_order = np.argsort(fitness)[::-1]
