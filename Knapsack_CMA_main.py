@@ -33,7 +33,7 @@ n_generations = 300
 sigma = 2
 
 all_fitness_histories_A = np.zeros((len(pop_size_set_A),n_generations))
-current_combonation = 'Rastrigin 2 Dim - Sigma {} '.format(sigma)
+current_combonation = 'Knapsack A - Sigma {} '.format(sigma)
 
 idx = 0
 initial_centroid = np.random.randn(items_quant_A,)
