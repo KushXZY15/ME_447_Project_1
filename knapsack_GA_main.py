@@ -81,7 +81,7 @@ for pop_size_A in pop_size_A_set:
     all_fitness_histories_A[idx,:] = best_fitnesses_A
     idx += 1
 
-plot_all_fitness(num_generations_A,pop_size_A_set,all_fitness_histories_A,current_combonation)
+plot_all_fitness(num_generations_A,pop_size_A_set,all_fitness_histories_A,current_combonation,minima=False)
 
 '''
 # Create 2D Plot of Fitness Varying with Population Size and Generations
