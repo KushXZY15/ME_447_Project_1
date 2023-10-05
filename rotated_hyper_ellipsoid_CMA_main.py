@@ -6,6 +6,7 @@ from matplotlib import cm
 from mpl_toolkits.mplot3d import axes3d
 import copy
 from functools import partial
+from plot_all_fitness import plot_all_fitness
 
 # Import Classes
 
@@ -87,17 +88,33 @@ def _rotated_hyper_ellipsoid_impl(x1,x2,shift_x1,shift_x2):
 
 rotated_hyper_ellipsoid = partial(_rotated_hyper_ellipsoid_impl,shift_x1=2.0,shift_x2=2.0)
 
+# Set Up Variables for CMA
+
+pop_size_set = np.array([5,10,15,20,30,40,50],dtype=int)
+n_generations = 20
+sigma = 1
+
+all_fitness_histories = np.zeros((len(pop_size_set),n_generations))
+current_combonation = 'Rotated Hyper Ellipsoid - Sigma {} '.format(sigma)
+
+idx = 0
+initial_centroid = np.random.randn(2,)
 current_problem = rotated_hyper_ellipsoid
+
+for pop_size in pop_size_set:
+    cma_es = CMAES(initial_centroid,sigma,int(pop_size),n_generations)
+    solution, fitness_history = cma_es.run(current_problem)
+    all_fitness_histories[idx,:] = fitness_history
+    idx += 1
+
+plot_all_fitness(n_generations,pop_size_set,all_fitness_histories,current_combonation,minima=True)
 
 #plot_problem_3d(current_problem, ((-20,-20), (20,20)))
 
-initial_centroid = np.random.randn(2,)
-cma_es = CMAES(initial_centroid,1,10,20)
-
-solution, fitness_history = cma_es.run(current_problem)
-
+'''
 plt.figure(figsize=(12, 12))
 plt.plot(fitness_history, '-o', lw=3, ms=20)
 plt.xlabel("Generation")
 plt.ylabel("Best Fitness")
 plt.show()
+'''

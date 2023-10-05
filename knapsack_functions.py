@@ -171,19 +171,6 @@ def knapsack_GA(pop_size, cap, weight, val, items_quant, item_prob, mates_quant,
         best_solution = pop_set[max_idx, :]
         best_fitness = pop_fitness[max_idx]
         best_fitnesses[generation] = best_fitness
-
-        print('Parents Info')
-        print(parents)
-        print(parent_fitness)
-
-        print('Offsprings Info')
-        print(offsprings)
-        print(offspring_fitness)
-
-        print('Mutated Offsprings Info')
-        print(mutated_offsprings)
-        print(mutated_offspring_fitness)
-
         '''
         print('Parents Info')
         print(parents)
@@ -196,22 +183,36 @@ def knapsack_GA(pop_size, cap, weight, val, items_quant, item_prob, mates_quant,
         print('Mutated Offsprings Info')
         print(mutated_offsprings)
         print(mutated_offspring_fitness)
-        '''
+
+        
+        print('Parents Info')
+        print(parents)
+        print(parent_fitness)
+
+        print('Offsprings Info')
+        print(offsprings)
+        print(offspring_fitness)
+
+        print('Mutated Offsprings Info')
+        print(mutated_offsprings)
+        print(mutated_offspring_fitness)
+        
         print('Current Generation:', generation)
         print('Best Solution So Far:', best_solution)
         print('Best Fitness So Far', best_fitness)
-
+        '''
+    '''
     print('Final Generation:')
     print('Best Solution Overall:', best_solution)
     print('Best Fitness Overaall', best_fitness)
-
+    
     plt.figure(figsize=(12, 12))
     plt.plot(best_fitnesses, '-o', lw=3, ms=20)
     plt.xlabel("Generation")
     plt.ylabel("Best Fitness")
     plt.show()
-
+    
     print('Best Fitnesses from All Generations')
     print(best_fitnesses)
-
+    '''
     return (pop_set, pop_fitness, best_solution, best_fitness, best_fitnesses)
