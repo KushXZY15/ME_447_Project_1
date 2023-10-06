@@ -1,6 +1,7 @@
 import numpy as np
 import random as rand
-import matplotlib.pyplot as plt
+
+# Kush Patel and Ben Goddard
 
 # Pseudo Code
 # Create vector of normally distributed x values centered around 0

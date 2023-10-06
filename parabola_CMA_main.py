@@ -1,4 +1,4 @@
-###!!! Created parabola code myself (i know fancy) and adapted the rest from provided
+# Adapted from ME447 Module Modfied by Kush Patel and Ben Goddard
 
 # Import Packages
 import numpy as np
@@ -21,7 +21,7 @@ n_generations = 15
 sigma = 2.0
 
 all_fitness_histories = np.zeros((len(pop_size_set),n_generations))
-current_combonation = 'Parabola  Mutation_Prob {} - Mutation_Spread {} - Pop_Spread {}'.format(prob_mutation, mutation_spread, pop_spread)
+current_combonation = 'Parabola - Sigma {} '.format(sigma)
 
 idx = 0
 initial_centroid = np.random.randn(1,)

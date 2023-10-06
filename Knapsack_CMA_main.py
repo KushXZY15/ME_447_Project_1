@@ -1,8 +1,10 @@
 import numpy as np
 from functools import partial
 from CMAES_main import CMAES
-from knapsack_GA_functions import *
+from knapsack_functions import *
 from plot_all_fitness import plot_all_fitness
+
+# Adapted from ME447 Module Modfied by Kush Patel and Ben Goddard
 
 # Load Knapsack data
 knapsack_A = np.load('A.npz')

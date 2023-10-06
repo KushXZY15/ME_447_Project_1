@@ -6,6 +6,8 @@ from functools import partial
 from plot_all_fitness import plot_all_fitness
 from CMAES_main import CMAES 
 
+# Kush Patel and Ben Goddard
+
 # Function Definitions
 
 def range_from_bounds(bounds, resolution):

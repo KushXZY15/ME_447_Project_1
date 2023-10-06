@@ -1,11 +1,9 @@
 # Import Packages
 import numpy as np
-import random as rand
-import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import axes3d
-from matplotlib import cm
 from plot_all_fitness import plot_all_fitness
 from knapsack_functions import * 
+
+# Kush Patel and Ben Goddard
 
 # Pseudo Code
 # Load Data

@@ -1,6 +1,8 @@
 import numpy as np
 import random as rand
 
+# Kush Patel and Ben Goddard
+
 # Function to Parse Knapsack Data
 
 def open_knapsack(knapsack):

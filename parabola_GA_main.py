@@ -1,6 +1,8 @@
 from parabola_GA_functions import *
 from plot_all_fitness import plot_all_fitness
 
+# Kush Patel and Ben Goddard
+
 # Constants for GA
 pop_size_set = np.array([6,10,25,50,75,100])
 

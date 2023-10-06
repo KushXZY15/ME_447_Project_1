@@ -1,6 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+# Kush Patel and Ben Goddard
+
 def plot_all_fitness(num_generations,pop_size_set,all_fitness_history,current_combonation,minima):
     # Create 2D Plot of Fitness Varying with Population Size and Generations
     fig = plt.figure(figsize=(20,10))

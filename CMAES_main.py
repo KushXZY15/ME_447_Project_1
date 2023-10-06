@@ -1,6 +1,8 @@
 import numpy as np
 import copy
 
+# Adapted from ME447 Module Modifed by Kush Patel
+
 class CMAES:
     """Naive CMA implementation"""
 

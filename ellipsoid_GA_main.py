@@ -1,6 +1,8 @@
 from ellipsoid_GA_functions import *
 from plot_all_fitness import plot_all_fitness
 
+# Kush Patel and Ben Goddard
+
 # Constants for GA
 pop_size = 50
 

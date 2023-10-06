@@ -1,6 +1,8 @@
 import numpy as np
 import random as rand
 
+# Kush Patel and Ben Goddard
+
 # Pseudo Code
 # Create vector of normally distributed x values centered around 0
 # Get fitness by evaluating function f(x) = 10*x**2 at given x
