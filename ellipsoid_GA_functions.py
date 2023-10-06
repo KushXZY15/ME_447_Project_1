@@ -65,8 +65,11 @@ def crossover(parents, children_quant):
         # creates index/chooses row of parent for parent 1 of current loop child
         p2_idx = (child + 1) % children_quant
         # does the same for parent 2, restarts at parents[row index 0] when last child made
-        children[child, 0] = parents[p1_idx, 0]
-        children[child, 1] = parents[p2_idx, 1]
+        crossing_ratio = np.random.uniform(0.0, 1.0)
+        children[child, 0] = np.average((parents[p1_idx, 0], parents[p2_idx, 0]),
+                                     weights=(1 - crossing_ratio, crossing_ratio))
+        children[child, 1] = np.average((parents[p1_idx, 1], parents[p2_idx, 1]),
+                                        weights=(1 - crossing_ratio, crossing_ratio))
         # performs crossover as weighted average of parent 1 and parent 2
         # crossover behavior: (parent 1 * crossing_ratio' + parent 2 * crossing_ratio)/2
     children_fitness = fitness_calc(children)
@@ -133,34 +136,10 @@ def ellipsoid_ga(pop_size, pop_spread, mates_quant, num_generations, children_qu
         best_solution = pop_set[max_idx, :]
         best_fitness = pop_fitness[max_idx]
         best_fitnesses[generation] = best_fitness
-        '''
-        print('Parents Info')
-        print(parents)
-        print(parent_fitness)
 
-        print('Offsprings Info')
-        print(children)
-        print(children_fitness)
-
-        print('Mutated Offsprings Info')
-        print(mutated_children)
-        print(mutated_children_fitness)
-
-        print('Current Generation:', generation)
-        print('Best Solution So Far:', best_solution)
-        print('Best Fitness So Far', best_fitness)
-        '''
     print('Final Generation:')
     print('Best Solution Overall:', best_solution)
     print('Best Fitness Overaall', best_fitness)
-    '''
-    plt.figure(figsize=(12, 12))
-    plt.plot(best_fitnesses, '-o', lw=3, ms=20)
-    plt.xlabel("Generation")
-    plt.ylabel("Best Fitness")
-    plt.show()
-    '''
-
     
     # print('Best Fitnesses from All Generations')
     # print(best_fitnesses)

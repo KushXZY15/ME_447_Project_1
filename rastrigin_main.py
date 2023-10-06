@@ -1,14 +1,9 @@
 # Import Packages
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.colors as colors
 from matplotlib import cm
-from mpl_toolkits.mplot3d import axes3d
-import copy
 from functools import partial
 from plot_all_fitness import plot_all_fitness
-# Import Classes
-
 from CMAES_main import CMAES 
 
 # Function Definitions
@@ -82,8 +77,7 @@ def plot_cov_ellipse(pos, cov, volume=.99, ax=None, fc='lightblue', ec='darkblue
     ellip = Ellipse(xy=pos, width=width, height=height, angle=theta, **kwrg)
     ax.add_artist(ellip)
 
-### !!! These define the rastrigin problems. Also function as the fitness functions. All code below here is fulled in some manner from the provided notebook but with modified variables as needed.
-
+# Define Rastrigin Problems for CMA
 def _shifted_rastrigin_impl_2(x,y,shift_x, shift_y):
     return (2 * 10.0 + ((x-shift_x)**2 + (y-shift_y)**2) - 10.0 * np.cos(2.0 * np.pi * (x-shift_x)) - 10.0 * np.cos(2.0 * np.pi * (y-shift_y)))
 
@@ -94,15 +88,15 @@ def _shifted_rastrigin_impl_5(x1,x2,x3,x4,x5,shift_x1,shift_x2,shift_x3,shift_x4
 shifted_rastrigin_2 = partial(_shifted_rastrigin_impl_2,shift_x=2.0,shift_y=2.0)
 shifted_rastrigin_5 = partial(_shifted_rastrigin_impl_5,shift_x1=2.0,shift_x2=2.0,shift_x3=2.0,shift_x4=2.0,shift_x5=2.0)
 
-current_problem = shifted_rastrigin_2
-
 #plot_problem_3d(current_problem, ((-20,-20), (20,20)))
 
 # Set Up Variables for CMA
 
-pop_size_set_2 = np.array([5,10,15,20,30,40,50],dtype=int)
-n_generations = 50
-sigma = 2
+'''
+# Run Rastring 2 Dim
+pop_size_set_2 = np.array([5,10,15,20,30,40,50,75,100,125,150,175,200,250,300,400,500],dtype=int)
+n_generations = 100
+sigma = 0.5
 
 all_fitness_histories_2 = np.zeros((len(pop_size_set_2),n_generations))
 current_combonation = 'Rastrigin 2 Dim - Sigma {} '.format(sigma)
@@ -118,23 +112,24 @@ for pop_size in pop_size_set_2:
     idx += 1
 
 plot_all_fitness(n_generations,pop_size_set_2,all_fitness_histories_2,current_combonation,minima=True)
-
 '''
-plt.figure(figsize=(12, 12))
-plt.plot(fitness_history_2, '-o', lw=3, ms=20)
-plt.xlabel("Generation")
-plt.ylabel("Best Fitness")
-plt.show()
 
-plt.figure(figsize=(12, 12))
-plt.plot(fitness_history_5, '-o', lw=3, ms=20)
-plt.xlabel("Generation")
-plt.ylabel("Best Fitness")
-plt.show()
+# Run Rastring 5 Dim
+pop_size_set_5 = np.array([5,10,15,20,30,40,50,75,100,125,150,175,200,250,300,400,500],dtype=int)
+n_generations = 200
+sigma = 0.5
 
+all_fitness_histories_5 = np.zeros((len(pop_size_set_5),n_generations))
+current_combonation = 'Rastrigin 5 Dim - Sigma {} '.format(sigma)
 
-initial_centroid = np.random.randn(5, )
-cma_es = CMAES(initial_centroid, 5, 30, 100)
+idx = 0
+initial_centroid = np.random.randn(5,)
+current_problem = shifted_rastrigin_5
 
-cma_es.run(current_problem)
-'''
+for pop_size in pop_size_set_5:
+    cma_es = CMAES(initial_centroid,sigma,int(pop_size),n_generations)
+    solution_2, fitness_history_5 = cma_es.run(current_problem)
+    all_fitness_histories_5[idx,:] = fitness_history_5
+    idx += 1
+
+plot_all_fitness(n_generations,pop_size_set_5,all_fitness_histories_5,current_combonation,minima=True)

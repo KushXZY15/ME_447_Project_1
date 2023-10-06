@@ -2,11 +2,9 @@ from parabola_GA_functions import *
 from plot_all_fitness import plot_all_fitness
 
 # Constants for GA
-pop_size = 50
-
 pop_size_set = np.array([6,10,25,50,75,100])
 
-pop_spread = 1000
+pop_spread = 1000000
 
 mates_quant = 25
 
@@ -14,9 +12,9 @@ children_quant = mates_quant - 1
 
 num_generations = 50
 
-prob_mutation = 0.05
+prob_mutation = 0.5
 
-mutation_spread = 0.05
+mutation_spread = 0.5
 
 all_fitness_histories = np.zeros((len(pop_size_set),num_generations))
 

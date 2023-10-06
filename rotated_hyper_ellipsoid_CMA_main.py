@@ -1,15 +1,9 @@
 # Import Packages
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.colors as colors
 from matplotlib import cm
-from mpl_toolkits.mplot3d import axes3d
-import copy
 from functools import partial
 from plot_all_fitness import plot_all_fitness
-
-# Import Classes
-
 from CMAES_main import CMAES 
 
 # Function Definitions
@@ -88,11 +82,11 @@ def _rotated_hyper_ellipsoid_impl(x1,x2,shift_x1,shift_x2):
 
 rotated_hyper_ellipsoid = partial(_rotated_hyper_ellipsoid_impl,shift_x1=2.0,shift_x2=2.0)
 
-# Set Up Variables for CMA
+# Run Rotated Hyper Ellipsoid CMA
 
 pop_size_set = np.array([5,10,15,20,30,40,50],dtype=int)
 n_generations = 20
-sigma = 1
+sigma = 2.0
 
 all_fitness_histories = np.zeros((len(pop_size_set),n_generations))
 current_combonation = 'Rotated Hyper Ellipsoid - Sigma {} '.format(sigma)
@@ -110,11 +104,3 @@ for pop_size in pop_size_set:
 plot_all_fitness(n_generations,pop_size_set,all_fitness_histories,current_combonation,minima=True)
 
 #plot_problem_3d(current_problem, ((-20,-20), (20,20)))
-
-'''
-plt.figure(figsize=(12, 12))
-plt.plot(fitness_history, '-o', lw=3, ms=20)
-plt.xlabel("Generation")
-plt.ylabel("Best Fitness")
-plt.show()
-'''

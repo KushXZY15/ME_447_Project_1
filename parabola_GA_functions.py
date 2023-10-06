@@ -1,6 +1,5 @@
 import numpy as np
 import random as rand
-import matplotlib.pyplot as plt
 
 # Pseudo Code
 # Create vector of normally distributed x values centered around 0
@@ -9,18 +8,6 @@ import matplotlib.pyplot as plt
 # Mutate by generating a random value called mutation factor, for ex: 0.9
 # Decide with probability p whether to mutate i'th individual by multiplying by i'th mutation factor
 # Select most fit solutions to reproduce
-
-# Function to Parse Knapsack Data
-"""
-def open_knapsack(knapsack):
-    capacity = knapsack['capacity']
-    quantity = knapsack['n_items']
-    values = knapsack['item_values']
-    weights = knapsack['item_weights']
-
-    return (capacity, quantity, values, weights)
-"""
-
 
 # Create Initial Knapsack Population
 def objective_function(x):
@@ -47,7 +34,6 @@ def fitness_calc(pop_set):
         fitness[individual] = -1 * objective_function(pop_set[individual, 0])
 
     return fitness
-
 
 def mating(pop_set, fitness, mates_quant):
     mate_order = np.argsort(fitness)[::-1]
@@ -83,24 +69,24 @@ def crossover(parents, children_quant):
                                      weights=(1 - crossing_ratio, crossing_ratio))
         # performs crossover as weighted average of parent 1 and parent 2
         # crossover behavior: (parent 1 * crossing_ratio' + parent 2 * crossing_ratio)/2
-        children_fitness = fitness_calc(children)
-        # returns a column vector with child_quant # of rows filled with objective values of children
+    children_fitness = fitness_calc(children)
+    # returns a column vector with child_quant # of rows filled with objective values of children
     return children, children_fitness
     # children and their fitness are related index-wise
 
 
 def mutation(children, prob_mutation, mutation_spread):
+    mutated_children = children
+    # renames copy of children to mutated_children containing the same values as children
+    mutations = np.random.uniform(0.0, 1.0, (len(children[:, 0]), 1))
+    # creates a column vector of random values between 0 and 1
+    mutation_spread = np.random.uniform(-1 * mutation_spread, mutation_spread)
+    # create random percentage value between +-maximum percentage to increase/decrease mutated child by
     for child in range(len(children[:, 0])):
         # indexes rows in children
-        mutated_children = children
-        # renames copy of children to mutated_children containing the same values as children
-        mutations = np.random.uniform(0.0, 1.0, (len(children[:, 0]), 1))
-        # creates a column vector of random values between 0 and 1
-        mutation_spread = np.random.uniform(-1 * mutation_spread, mutation_spread)
-        # create random percentage value between +-maximum percentage to increase/decrease mutated child by
         if mutations[child, 0] <= prob_mutation:
             # if mutation value[child row index] is less than specified prob
-            mutated_children[child, 0] *= 1 + mutation_spread
+            mutated_children[child, 0] *= (1 + mutation_spread)
             # increase/decrease child by the random percentage from above
     mutated_child_fitness = fitness_calc(children)
     # sets the fitness value of mutated offspring = the fitness of the given offspring pop
@@ -129,7 +115,6 @@ def environmental_selection(parents, mutated_children, pop_size, parent_fitness,
 
     return pop_set, pop_fitness
 
-
 def parabola_ga(pop_size, pop_spread, mates_quant, num_generations, children_quant, mutation_spread, prob_mutation):
     pop_set = create_pop(pop_size, pop_spread)
     best_fitnesses = np.zeros(num_generations)
@@ -146,34 +131,10 @@ def parabola_ga(pop_size, pop_spread, mates_quant, num_generations, children_qua
         best_solution = pop_set[max_idx, :]
         best_fitness = pop_fitness[max_idx]
         best_fitnesses[generation] = best_fitness
-        '''
-        print('Parents Info')
-        print(parents)
-        print(parent_fitness)
 
-        print('Offsprings Info')
-        print(children)
-        print(children_fitness)
-
-        print('Mutated Offsprings Info')
-        print(mutated_children)
-        print(mutated_children_fitness)
-
-        print('Current Generation:', generation)
-        print('Best Solution So Far:', best_solution)
-        print('Best Fitness So Far', best_fitness)
-        '''
     print('Final Generation:')
     print('Best Solution Overall:', best_solution)
     print('Best Fitness Overaall', best_fitness)
-    '''
-    plt.figure(figsize=(12, 12))
-    plt.plot(best_fitnesses, '-o', lw=3, ms=20)
-    plt.xlabel("Generation")
-    plt.ylabel("Best Fitness")
-    plt.show()
-    '''
-
 
     print('Best Fitnesses from All Generations')
     print(best_fitnesses)

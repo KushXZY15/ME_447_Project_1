@@ -30,4 +30,4 @@ for pop_size in pop_size_set:
     all_fitness_histories[idx,:] = best_fitnesses
     idx += 1
 
-plot_all_fitness(num_generations,pop_size_set,all_fitness_histories,current_combonation,minima=True)
+plot_all_fitness(num_generations,pop_size_set,all_fitness_histories,current_combonation,minima=False)

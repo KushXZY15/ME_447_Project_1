@@ -18,10 +18,10 @@ def parabola(x):
 
 pop_size_set = np.array([4,5,6,7,8,9,10,12,15],dtype=int)
 n_generations = 15
-sigma = 1
+sigma = 2.0
 
 all_fitness_histories = np.zeros((len(pop_size_set),n_generations))
-current_combonation = 'Parabola - Sigma {} '.format(sigma)
+current_combonation = 'Parabola  Mutation_Prob {} - Mutation_Spread {} - Pop_Spread {}'.format(prob_mutation, mutation_spread, pop_spread)
 
 idx = 0
 initial_centroid = np.random.randn(1,)
@@ -34,11 +34,3 @@ for pop_size in pop_size_set:
     idx += 1
 
 plot_all_fitness(n_generations,pop_size_set,all_fitness_histories,current_combonation,minima=True)
-
-'''
-plt.figure(figsize=(12, 12))
-plt.plot(fitness_history, '-o', lw=3, ms=20)
-plt.xlabel("Generation")
-plt.ylabel("Best Fitness")
-plt.show()
-'''

@@ -4,7 +4,7 @@ import copy
 class CMAES:
     """Naive CMA implementation"""
 
-    def __init__(self, initial_mean, sigma, popsize, n_generations, **kwargs): ### !!! Added in n_generations to add ability to set generations total in whichever module CMAES is called
+    def __init__(self, initial_mean, sigma, popsize, n_generations, **kwargs):
         """Please do all the initialization. The reserve space and
         code for collecting the statistics are already provided."""
 
@@ -40,7 +40,7 @@ class CMAES:
         self.chiN = np.sqrt(self.dim) * (1.0 - 0.25 / self.dim + 1.0/(21.0 * self.dim**2))
         self.mueff = 1.0 / np.linalg.norm(self.weights, 2)**2
         self.generations = 0
-        self.n_generations = n_generations ### !!! Put n_generations into class and add a self variable to track and hold best fitness from each generation
+        self.n_generations = n_generations
         self.fitness_history = np.zeros(n_generations)
         # Options
 
@@ -89,7 +89,7 @@ class CMAES:
         self.stats_covs.append(copy.deepcopy(self.C))
 
         population.sort(key=lambda ind: problem(*ind))
-        self.fitness_history[self.generations] = problem(*population[0]) ### !!! Record best fitness from current generation to self.fitness_history by taking 1st index of sorted population
+        self.fitness_history[self.generations] = problem(*population[0])
 
         # population.sort(key=lambda ind: problem(ind[0], ind[1]))
         # population.sort(key=problem)
