@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import axes3d
 from matplotlib import cm
 from plot_all_fitness import plot_all_fitness
-from knapsack_GA_functions import * 
+from knapsack_functions import * 
 
 # Pseudo Code
 # Load Data
